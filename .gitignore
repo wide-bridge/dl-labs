@@ -1,0 +1,16 @@
+# OS
+.DS_Store
+
+# Jupyter
+.ipynb_checkpoints/
+
+# datasets (절대 Git에 올리지 않음)
+datasets/
+VOCdevkit/
+
+# models / artifacts
+models/
+*.pt
+*.pth
+
+
