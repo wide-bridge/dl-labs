@@ -10,10 +10,8 @@
 - 검증/평가 시 loss: data_loss only
 - 👉 정칙화는 train/val loss가 아니라, test data loss로 성공 여부를 판단해야 함.
 
-2️⃣ 실험 결과 요약
+2️⃣ 실험 결과 요약 (동일 기준: test data_loss only)
 
-(동일 기준: test data_loss only)
-2️⃣ 실험 결과 요약 (같은 기준: test data_loss)
 정칙화 전: Final TEST loss (data_loss only): 0.096                                   baseline
 L1 정칙화 후: Final TEST loss (data_loss only, with L1 regularization): 0.270707 -> ❌ 크게 악화
 L2 정칙화 후: Final TEST loss (data_loss only, with L2 regularization): 0.199244 -> ❌ 악화
