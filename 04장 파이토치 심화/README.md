@@ -4,15 +4,14 @@
 
 1️⃣ Loss와 정칙화의 역할 구분 
 --
-구분	data loss	regularization (L1, L2 등)
-목적	예측 정확도	모델 복잡도 제어
-학습 시	✔ 포함	✔ 포함
-평가(Test) 시	✔ 포함	❌ 제외
+구분	   data loss	  regularization (L1, L2 등)
+목적	  예측 정확도	  모델 복잡도 제어
+학습   	  ✔ 포함	        ✔ 포함
+검증/평가	✔ 포함	       ❌ 제외
 
-학습 시 loss: data_loss + regularization
-
-평가(test) 시 loss: data_loss only
-👉 정칙화는 train/val loss가 아니라, test data loss로 성공 여부를 판단해야 함.
+- 학습 시 loss: data_loss + regularization
+- 검증/평가 시 loss: data_loss only
+- 👉 정칙화는 train/val loss가 아니라, test data loss로 성공 여부를 판단해야 함.
 
 2️⃣ 실험 결과 요약
 
