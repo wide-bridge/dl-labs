@@ -76,5 +76,5 @@ lambda_l1 = 1e-3, lambda_l2 = 1e-3 로 수치를 잘 조작하면 좋아짐.
 
 #### 파이토치의 텐서를 다른 라이브러리로 전환할 경우 이용하는 방법 
 
-- 텐서를 쓰지 않을 경우 - transforms.Compose ([...,transforms.ToPILImage()]) 에 추가
+- 텐서를 쓰지 않을 경우 - transforms.Compose ([...,transforms.ToPILImage()]) 에 , transforms.ToPILImage() 추가
 - 텐서를 쓰고 나서 .permute(1,2,0)으로 순서를 바꿈
