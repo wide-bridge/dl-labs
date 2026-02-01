@@ -1,16 +1,21 @@
-# OS
-.DS_Store
-
 # Jupyter
 .ipynb_checkpoints/
 
-# datasets (절대 Git에 올리지 않음)
+# Datasets / outputs
 datasets/
-VOCdevkit/
+data/
+outputs/
 
-# models / artifacts
-models/
-*.pt
-*.pth
+# Images
+*.png
+*.jpg
+
+# Python
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
+Thumbs.db
 
 
