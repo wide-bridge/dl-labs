@@ -1,10 +1,16 @@
 ### Ch04_1 정칙화 등.ipynb 
 
-#### 🔎 정칙화 및 최적화 기법 실험 최종 정리
+#### 🔎 정칙화 및 최적화 최종 정리
 
-#### 1️⃣ Loss와 정칙화의 역할 구분 
---
+#### 1️⃣ Loss와 정칙화의 역할 구분
+
 <img width="502" height="171" alt="image" src="https://github.com/user-attachments/assets/36a5a312-78c8-4b2b-b269-6016f3599b51" />
+
+- 구분: data loss vs regularization (L1, L2 등)
+- 목적: 예측 정확도 vs 모델 복잡도 제어
+- 학습 시: data loss ✔ / regularization ✔
+- 평가(Test) 시: data loss ✔ / regularization ❌
+
 
 - 학습 시 loss: data_loss + regularization
 - 검증/평가 시 loss: data_loss only
