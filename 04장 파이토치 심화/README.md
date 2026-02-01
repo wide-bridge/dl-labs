@@ -2,7 +2,7 @@
 
 #### 🔎 정칙화 및 최적화 기법 실험 최종 정리
 
-1️⃣ Loss와 정칙화의 역할 구분 
+#### 1️⃣ Loss와 정칙화의 역할 구분 
 --
 <img width="502" height="171" alt="image" src="https://github.com/user-attachments/assets/36a5a312-78c8-4b2b-b269-6016f3599b51" />
 
@@ -10,40 +10,38 @@
 - 검증/평가 시 loss: data_loss only
 - 👉 정칙화는 train/val loss가 아니라, test data loss로 성공 여부를 판단해야 함.
 
-2️⃣ 실험 결과 요약 (동일 기준: test data_loss only)
+#### 2️⃣ 실험 결과 요약 (동일 기준: test data_loss only)
 
-정칙화 전: Final TEST loss (data_loss only): 0.096                                   baseline
-L1 정칙화 후: Final TEST loss (data_loss only, with L1 regularization): 0.270707 -> ❌ 크게 악화
-L2 정칙화 후: Final TEST loss (data_loss only, with L2 regularization): 0.199244 -> ❌ 악화
-엘라스틱넷: Final TEST loss (data_loss only, with Elastic Net (λ1=0.001, λ2=0.001)): 0.215546 ❌ 악화
-# 단 🔹 Elastic Net 계수
+- 정칙화 전: Final TEST loss (data_loss only): 0.096                                   baseline
+- L1 정칙화 후: Final TEST loss (data_loss only, with L1 regularization): 0.270707 -> ❌ 크게 악화
+- L2 정칙화 후: Final TEST loss (data_loss only, with L2 regularization): 0.199244 -> ❌ 악화
+- 엘라스틱넷: Final TEST loss (data_loss only, with Elastic Net (λ1=0.001, λ2=0.001)): 0.215546 ❌ 악화
+- 단 🔹 Elastic Net 계수
 lambda_l1 = 1e-3
 lambda_l2 = 1e-3 수치를 잘 조작하면 좋아짐. 
-Final TEST loss (data_loss only, with Elastic Net (λ1=0.001, λ2=0.001)): 0.094662 ✔ 소폭 개선
-가중치 감쇠: Final TEST loss (data_loss only, with weight decay=0.01): 0.095343 ->✔ 소폭 개선
-모멘텀 적용: Final TEST loss (data_loss only, with SGD momentum=0.9): 0.092824 -> ✔ 가장 개선
-그래드언트클리핑: Final TEST loss (data_loss only, with gradient clipping (max_norm=0.1)): 11839.280273 -> ❌ 학습 붕괴(가장 심각)
-드롭아웃: Final TEST loss (data_loss only, with Dropout p=0.5): 3136.483154 ❌ 심각한 성능 붕괴
+- Elastic Net 계수 조정 성공 사례 Final TEST loss (data_loss only, with Elastic Net (λ1=0.001, λ2=0.001)): 0.094662 ✔ 소폭 개선
+- 가중치 감쇠: Final TEST loss (data_loss only, with weight decay=0.01): 0.095343 ->✔ 소폭 개선
+- 모멘텀 적용: Final TEST loss (data_loss only, with SGD momentum=0.9): 0.092824 -> ✔ 가장 개선
+- 그래드언트클리핑: Final TEST loss (data_loss only, with gradient clipping (max_norm=0.1)): 11839.280273 -> ❌ 학습 붕괴(가장 심각)
+- 드롭아웃: Final TEST loss (data_loss only, with Dropout p=0.5): 3136.483154 ❌ 심각한 성능 붕괴
 
-3️⃣ ❗ 소결 (핵심 판단)
+#### 3️⃣ ❗ 소결
 
-이 데이터와 모델, 그리고 현재 설정에서는 L1·L2 정칙화 등은 일반화 성능을 개선하지 못했다.
+- 현재 데이터와 모델 현재 설정에서는 L1·L2 정칙화 등은 일반화 성능을 개선하지 못했음. 이는 정칙화가 필요하지 않은 상황이었거나 정칙화 강도(λ)가 과도했기 때문/
 
-이는 정칙화가 필요하지 않은 상황이었거나 정칙화 강도(λ)가 과도했기 때문이다.
-
-4️⃣ 왜 이런 상황이 발생했는가? (왜 정칙화가 비효과적이었는가?)
-(1) λ가 과도하게 큼
+#### 4️⃣ 왜 이런 상황이 발생했는가? (왜 정칙화가 비효과적이었는가?)
+- (1) λ가 과도하게 큼:
 _lambda = 0.5 는 MSE 스케일 대비 매우 큰 값
 
-L1
+- L1:
 비미분점 + 강한 패널티
 작은 모델에서 표현력 급격히 훼손
 
-L2
+- L2:
 과도한 shrinkage(수축) 발생
 👉 정칙화 개념의 실패가 아니라, 하이퍼파라미터 튜닝 실패
 
-(2) 데이터 자체가 이미 과적합 상태가 아님
+- (2) 데이터 자체가 이미 과적합 상태가 아님
 
 정칙화 없이도 train / val / test loss 모두 안정
 
@@ -51,17 +49,17 @@ test loss ≈ 0.096
 고칠 과적합이 존재하지 않음
 👉 문제가 없는데 제약을 건 상황
 
-(3) 이 문제에서는 feature를 줄이는 것이 오히려 손해
+- (3) 이 문제에서는 feature를 줄이는 것은 부적합
 
-입력 feature: [x², x] (2개뿐)
-L1의 본질: sparsity / feature selection
+- * 입력 feature: [x², x] (2개뿐)
+- * L1의 본질: sparsity / feature selection
 
 하지만: 두 feature 모두 의미 있음
 
 하나라도 약화 → 표현력 손실 → 성능 저하
 👉 L1의 장점이 단점으로 작동한 전형적인 사례
 
-(4) Gradient Clipping & Dropout이 망가진 이유 (보완 설명)
+- (4) Gradient Clipping & Dropout이 망가진 이유 (보완 설명)
 
 🔹 Gradient Clipping
 원래 목적: gradient 폭발 방지
